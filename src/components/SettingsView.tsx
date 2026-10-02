@@ -28,15 +28,17 @@ import {
   Copy,
   Check,
   Package,
-  FolderDown
+  FolderDown,
+  HardDrive
 } from 'lucide-react';
 import { HwsLogo } from './HwsLogo';
 import { PWAInstallButton } from './PWAInstallButton';
 import { InstallAppModal } from './InstallAppModal';
+import { GoogleDriveBackupView } from './GoogleDriveBackupView';
 
 interface SettingsViewProps {
   currentAdmin: AdminUser;
-  initialTab?: 'PROFIL' | 'LOGS' | 'SERVER' | 'ADMINS' | 'APP';
+  initialTab?: 'PROFIL' | 'LOGS' | 'SERVER' | 'GOOGLE_DRIVE' | 'ADMINS' | 'APP';
   onPrintLogs: () => void;
   onAddAdmin: () => void;
   onEditAdmin: (admin: AdminUser) => void;
@@ -53,7 +55,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
   const state = appStore.getState();
   const profile = state.koperasiProfile;
 
-  const [activeTab, setActiveTab] = useState<'PROFIL' | 'LOGS' | 'SERVER' | 'ADMINS' | 'APP'>(initialTab);
+  const [activeTab, setActiveTab] = useState<'PROFIL' | 'LOGS' | 'SERVER' | 'GOOGLE_DRIVE' | 'ADMINS' | 'APP'>(initialTab);
   const [showInstallModal, setShowInstallModal] = useState(false);
   const [copiedLink, setCopiedLink] = useState(false);
   const [copiedBroadcast, setCopiedBroadcast] = useState(false);
@@ -185,7 +187,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
       </div>
 
       {/* Sub-Tab Navigation Pills (5 Items: Profil, Logs, Server, Admins, App) */}
-      <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 bg-slate-950 p-1.5 rounded-2xl border border-slate-800">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 bg-slate-950 p-1.5 rounded-2xl border border-slate-800">
         <button
           type="button"
           onClick={() => setActiveTab('PROFIL')}
@@ -227,6 +229,19 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
 
         <button
           type="button"
+          onClick={() => setActiveTab('GOOGLE_DRIVE')}
+          className={`py-2.5 px-3 rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition ${
+            activeTab === 'GOOGLE_DRIVE'
+              ? 'bg-amber-500 text-slate-950 shadow-md font-black'
+              : 'text-amber-400 hover:text-amber-300 bg-amber-950/20 border border-amber-500/20'
+          }`}
+        >
+          <HardDrive className="w-4 h-4" />
+          <span>Google Drive</span>
+        </button>
+
+        <button
+          type="button"
           onClick={() => setActiveTab('ADMINS')}
           className={`py-2.5 px-3 rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition ${
             activeTab === 'ADMINS'
@@ -241,14 +256,14 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
         <button
           type="button"
           onClick={() => setActiveTab('APP')}
-          className={`py-2.5 px-3 rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition col-span-2 sm:col-span-1 ${
+          className={`py-2.5 px-3 rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition ${
             activeTab === 'APP'
               ? 'bg-emerald-500 text-slate-950 shadow-md font-black'
               : 'text-emerald-400 hover:text-emerald-300 bg-emerald-950/20 border border-emerald-500/20'
           }`}
         >
           <Smartphone className="w-4 h-4" />
-          <span>App Android & Laptop</span>
+          <span>App & Download</span>
         </button>
       </div>
 
@@ -687,12 +702,23 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
               }}
               className="px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition flex items-center gap-2"
             >
-              <RefreshCw className="w-4 h-4" /> Trigger Sinkronisasi Google Cloud Sekarang
+              <RefreshCw className="w-4 h-4" /> Trigger Sinkronisasi Firestore Sekarang
+            </button>
+
+            <button
+              onClick={() => setActiveTab('GOOGLE_DRIVE')}
+              className="px-4 py-2.5 bg-amber-600 hover:bg-amber-500 text-slate-950 rounded-xl text-xs font-bold transition flex items-center gap-2"
+            >
+              <HardDrive className="w-4 h-4" /> Buka Google Drive Cloud Backup
             </button>
           </div>
 
-
         </div>
+      )}
+
+      {/* SUB-TAB: GOOGLE DRIVE BACKUP */}
+      {activeTab === 'GOOGLE_DRIVE' && (
+        <GoogleDriveBackupView currentAdmin={currentAdmin} />
       )}
 
       {/* SUB-TAB 4: KELOLA ADMIN */}
