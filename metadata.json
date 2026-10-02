@@ -1,0 +1,6 @@
+{
+  "name": "Koperasi Himpunan Wirausaha Sejahtera (HWS)",
+  "description": "Sistem Informasi Koperasi HWS: Tabungan Kewajiban, Tabungan Umum, Buku Kas Anggota & Koperasi, Mutasi PDF Resmi, Zakat & Qurban, dan KTA Digital.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,150 @@
+{
+  "entities": {
+    "Member": {
+      "title": "Member",
+      "description": "Anggota resmi Koperasi HWS",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "noAnggota": { "type": "string" },
+        "nama": { "type": "string" },
+        "nik": { "type": "string" },
+        "noHp": { "type": "string" },
+        "email": { "type": "string" },
+        "password": { "type": "string" },
+        "securityQuestion": { "type": "string" },
+        "securityAnswer": { "type": "string" },
+        "wilayah": { "type": "string" },
+        "noRekKoperasi": { "type": "string" },
+        "bankAnggota": { "type": "string" },
+        "noRekBank": { "type": "string" },
+        "atasNamaRekBank": { "type": "string" },
+        "alamat": { "type": "string" },
+        "rtRw": { "type": "string" },
+        "kelurahan": { "type": "string" },
+        "kecamatan": { "type": "string" },
+        "kota": { "type": "string" },
+        "provinsi": { "type": "string" },
+        "kodePos": { "type": "string" },
+        "tanggalBergabung": { "type": "string" },
+        "isVerified": { "type": "boolean" },
+        "isPokokLocked": { "type": "boolean" },
+        "saldoPokok": { "type": "number" },
+        "saldoZakat": { "type": "number" },
+        "saldoQurban": { "type": "number" },
+        "saldoUmum": { "type": "number" },
+        "statusKeanggotaan": { "type": "string" }
+      },
+      "required": ["id", "noAnggota", "nama", "nik", "noHp", "wilayah", "noRekKoperasi", "statusKeanggotaan"]
+    },
+    "Admin": {
+      "title": "Admin",
+      "description": "Pengurus dan admin Koperasi HWS",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "username": { "type": "string" },
+        "nama": { "type": "string" },
+        "email": { "type": "string" },
+        "role": { "type": "string" },
+        "roleTitle": { "type": "string" },
+        "noHp": { "type": "string" },
+        "nik": { "type": "string" },
+        "password": { "type": "string" },
+        "securityQuestion": { "type": "string" },
+        "securityAnswer": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "username", "nama", "role", "email"]
+    },
+    "Transaction": {
+      "title": "Transaction",
+      "description": "Transaksi simpanan, setoran, dan penarikan anggota",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "memberId": { "type": "string" },
+        "namaAnggota": { "type": "string" },
+        "noRekKoperasi": { "type": "string" },
+        "tanggal": { "type": "string" },
+        "kategori": { "type": "string" },
+        "tipe": { "type": "string" },
+        "nominal": { "type": "number" },
+        "keterangan": { "type": "string" },
+        "cbg": { "type": "string" },
+        "saldoSetelah": { "type": "number" },
+        "status": { "type": "string" }
+      },
+      "required": ["id", "memberId", "nominal", "tipe", "status"]
+    },
+    "KasEntry": {
+      "title": "KasEntry",
+      "description": "Catatan Buku Kas Koperasi dan Buku Kas Anggota",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "bukuKas": { "type": "string" },
+        "tanggal": { "type": "string" },
+        "tipe": { "type": "string" },
+        "kategori": { "type": "string" },
+        "keterangan": { "type": "string" },
+        "nominal": { "type": "number" },
+        "saldoSetelah": { "type": "number" },
+        "isProtected": { "type": "boolean" },
+        "createdBy": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "bukuKas", "nominal", "tipe", "keterangan"]
+    },
+    "KoperasiProfile": {
+      "title": "KoperasiProfile",
+      "description": "Profil dan legalitas resmi Koperasi HWS",
+      "type": "object",
+      "properties": {
+        "namaKoperasi": { "type": "string" },
+        "nomorBadanHukum": { "type": "string" },
+        "alamatKantor": { "type": "string" },
+        "rtRw": { "type": "string" },
+        "kelurahan": { "type": "string" },
+        "kecamatan": { "type": "string" },
+        "kota": { "type": "string" },
+        "provinsi": { "type": "string" },
+        "kodePos": { "type": "string" },
+        "noTelepon": { "type": "string" },
+        "noWhatsapp": { "type": "string" },
+        "email": { "type": "string" },
+        "website": { "type": "string" },
+        "ketuaPengurus": { "type": "string" },
+        "sekretaris": { "type": "string" },
+        "bendahara": { "type": "string" },
+        "bankKoperasi": { "type": "string" },
+        "noRekKoperasiUtama": { "type": "string" },
+        "atasNamaRekKoperasi": { "type": "string" },
+        "npwp": { "type": "string" }
+      },
+      "required": ["namaKoperasi", "nomorBadanHukum"]
+    }
+  },
+  "firestore": {
+    "/members/{memberId}": {
+      "schema": { "$ref": "#/entities/Member" },
+      "description": "Data anggota resmi koperasi"
+    },
+    "/admins/{adminId}": {
+      "schema": { "$ref": "#/entities/Admin" },
+      "description": "Data admin dan pengurus koperasi"
+    },
+    "/transactions/{transactionId}": {
+      "schema": { "$ref": "#/entities/Transaction" },
+      "description": "Catatan transaksi setoran dan penarikan anggota"
+    },
+    "/kasEntries/{kasEntryId}": {
+      "schema": { "$ref": "#/entities/KasEntry" },
+      "description": "Catatan buku kas anggota dan buku kas koperasi"
+    },
+    "/settings/koperasiProfile": {
+      "schema": { "$ref": "#/entities/KoperasiProfile" },
+      "description": "Identitas legal dan profil operasional koperasi"
+    }
+  }
+}
